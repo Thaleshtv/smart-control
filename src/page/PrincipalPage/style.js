@@ -8,7 +8,6 @@ export const Container = styled.div`
     background-image: url(${Fundo});
     background-repeat: no-repeat;
     background-size: cover;
-    width: 60vw;
     min-height: 100vh;
   }
 

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   .login {
-    width: 50vw;
+    width: 43vw;
     height: 100vh;
 
     .loginContent {
