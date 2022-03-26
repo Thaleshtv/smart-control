@@ -85,3 +85,10 @@ export const Container = styled.div`
     }
   }
 `
+
+export const SpanError = styled.div`
+  font-size: 0.8rem;
+  color: red;
+  font-weight: 700;
+  margin-top: 0.25rem;
+`
