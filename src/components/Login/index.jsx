@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
+
 import * as Styled from './style'
 
 export default function Login() {
@@ -16,6 +18,8 @@ export default function Login() {
   const [emailUser, setEmailUser] = useState('')
   const [senhaUser, setSenhaUser] = useState('')
 
+  const history = useHistory()
+
   async function loginUser(data) {
     const response = await fetch('https://thalesloginapi.herokuapp.com/login', {
       method: 'POST',
@@ -27,6 +31,10 @@ export default function Login() {
     })
     const responseBody = await response.json()
     console.log(responseBody)
+
+    if (responseBody.success === true) {
+      history.push('/dashboard')
+    }
   }
 
   return (
