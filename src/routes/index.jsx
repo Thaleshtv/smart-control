@@ -1,5 +1,5 @@
-import PrincipalPage from '../page/PrincipalPage'
-import Dashboard from '../page/Dashboard'
+import PrincipalPage from '../pages/PrincipalPage'
+import Dashboard from '../pages/Dashboard'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 

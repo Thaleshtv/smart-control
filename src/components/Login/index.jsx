@@ -1,10 +1,15 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { changeUser } from '../../redux/userSlice'
 
 import * as Styled from './style'
 
 export default function Login() {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
   const {
     register,
     handleSubmit,
@@ -15,10 +20,6 @@ export default function Login() {
     console.log(data)
     loginUser(data)
   }
-  const [emailUser, setEmailUser] = useState('')
-  const [senhaUser, setSenhaUser] = useState('')
-
-  const history = useHistory()
 
   async function loginUser(data) {
     const response = await fetch('https://thalesloginapi.herokuapp.com/login', {
@@ -33,6 +34,7 @@ export default function Login() {
     console.log(responseBody)
 
     if (responseBody.success === true) {
+      dispatch(changeUser(responseBody.user.name))
       history.push('/dashboard')
     }
   }
