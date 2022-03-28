@@ -1,17 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const tokenUser = localStorage.getItem('accesToken')
+const loged = tokenUser != null ? true : false
+
+
 export const slice = createSlice({
   name: 'user',
   initialState: {
     nameUser: '',
-    isLoged: false
+    isLoged: loged,
+    token: tokenUser
   },
   reducers: {
     changeUser(state, { payload }) {
-      return { ...state, isLoged: true, nameUser: payload }
+      return { ...state, isLoged: true, nameUser: payload.nameUser, token: payload.token }
     },
     logOut(state) {
-      return { ...state, isLoged: false, nameUser: '' }
+      return { ...state, isLoged: false, nameUser: '', token: '' }
     }
   }
 })

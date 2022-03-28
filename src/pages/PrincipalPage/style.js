@@ -23,13 +23,13 @@ export const Container = styled.div`
     gap: 12rem;
 
     h1 {
-      font-size: 4rem;
+      font-size: 3rem;
       font-weight: 700;
       color: #fcfcfe;
     }
 
     p {
-      font-size: 1.25rem;
+      font-size: 1rem;
       font-weight: 400;
       color: #fcfcfe;
       text-align: justify;

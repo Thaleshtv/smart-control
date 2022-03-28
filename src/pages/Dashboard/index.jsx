@@ -10,6 +10,7 @@ export default function Dashboard() {
   const dispatch = useDispatch()
 
   const handleLogOut = () => {
+    localStorage.removeItem('accesToken')
     dispatch(logOut())
   }
   return (

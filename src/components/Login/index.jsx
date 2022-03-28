@@ -10,6 +10,8 @@ export default function Login() {
   const dispatch = useDispatch()
   const history = useHistory()
 
+  const accesToken = 'accesToken'
+  
   const {
     register,
     handleSubmit,
@@ -34,7 +36,11 @@ export default function Login() {
     console.log(responseBody)
 
     if (responseBody.success === true) {
-      dispatch(changeUser(responseBody.user.name))
+      localStorage.setItem(accesToken, responseBody.token)
+      dispatch(changeUser({
+        nameUser: responseBody.user.name,
+        token: responseBody.token
+      }))
       history.push('/dashboard')
     }
   }
