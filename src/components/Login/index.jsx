@@ -4,14 +4,23 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { changeUser } from '../../redux/userSlice'
 
+import CircularProgress from '@mui/material/CircularProgress'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
+import Stack from '@mui/material/Stack'
+import Fade from '@mui/material/Fade'
+import Box from '@mui/material/Box'
+
 import * as Styled from './style'
 
 export default function Login() {
-  const dispatch = useDispatch()
   const history = useHistory()
+  const dispatch = useDispatch()
 
-  const accesToken = 'accesToken'
-  
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
   const {
     register,
     handleSubmit,
@@ -19,11 +28,11 @@ export default function Login() {
   } = useForm()
 
   const onSubmit = (data) => {
-    console.log(data)
     loginUser(data)
   }
 
   async function loginUser(data) {
+    setLoading(true)
     const response = await fetch('https://thalesloginapi.herokuapp.com/login', {
       method: 'POST',
       headers: {
@@ -33,15 +42,26 @@ export default function Login() {
       body: JSON.stringify(data)
     })
     const responseBody = await response.json()
+    setLoading(false)
     console.log(responseBody)
 
+    const accesToken = 'accesToken'
     if (responseBody.success === true) {
       localStorage.setItem(accesToken, responseBody.token)
-      dispatch(changeUser({
-        nameUser: responseBody.user.name,
-        token: responseBody.token
-      }))
+      dispatch(
+        changeUser({
+          nameUser: responseBody.user.name,
+          token: responseBody.token
+        })
+      )
       history.push('/dashboard')
+    }
+    if (responseBody.success === false) {
+      setError(true)
+      setErrorMessage(responseBody.message)
+      setTimeout(() => {
+        setError(false)
+      }, 3000)
     }
   }
 
@@ -53,9 +73,9 @@ export default function Login() {
             <h1>Sing in</h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              // onKeyPress={(event) => {
-              //   event.key === 'Enter' && event.preventDefault()
-              // }}
+              onKeyPress={(event) => {
+                event.key === 'Enter' && event.preventDefault()
+              }}
             >
               <div className="inputGroup">
                 <div>
@@ -83,8 +103,26 @@ export default function Login() {
                 <p>Esqueci a senha</p>
               </div>
               <div className="buttonLoginGroup">
-                <button type="submit">Login</button>
+                <button type="submit" disabled={loading}>
+                  {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <CircularProgress color="inherit" />
+                    </Box>
+                  ) : (
+                    'Login'
+                  )}
+                </button>
                 <p>Criar conta</p>
+                <Fade in={error} sx={{ width: '100%' }}>
+                  <Stack>
+                    <Alert variant="filled" severity="error">
+                      <AlertTitle>
+                        <strong>Erro!</strong>
+                      </AlertTitle>
+                      {errorMessage}
+                    </Alert>
+                  </Stack>
+                </Fade>
               </div>
             </form>
           </div>

@@ -23,7 +23,7 @@ export const Container = styled.div`
     gap: 12rem;
 
     h1 {
-      font-size: 3rem;
+      font-size: 4rem;
       font-weight: 700;
       color: #fcfcfe;
     }

@@ -13,7 +13,7 @@ export const Container = styled.div`
   }
 
   .loginGroup {
-    margin-top: 5rem;
+    margin-top: 3rem;
 
     h1 {
       color: #575a58;

@@ -1,9 +1,12 @@
 import { logOut, selectUser } from '../../redux/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 
 export default function Dashboard() {
   const { nameUser } = useSelector(selectUser)
   const { isLoged } = useSelector(selectUser)
+
+  const history = useHistory()
 
   const logado = isLoged ? 'logado' : 'deslogado'
 
@@ -12,6 +15,7 @@ export default function Dashboard() {
   const handleLogOut = () => {
     localStorage.removeItem('accesToken')
     dispatch(logOut())
+    history.push('/')
   }
   return (
     <>
